@@ -1,18 +1,19 @@
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
-import { useRouter } from 'next/router'
+import { GoogleAuthProvider, signInWithRedirect } from 'firebase/auth'
+import Router, { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
 import { FcGoogle } from 'react-icons/fc'
 import { auth } from '../../utils/firebase'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { useEffect } from 'react'
+
 const Login = () => {
   const route = useRouter()
-  //Sign in with Google
+
   const googleProvider = new GoogleAuthProvider()
-  const [user, loading] = useAuthState(auth)
+  const [user] = useAuthState(auth)
 
   const googleLogin = async () => {
     try {
-      const res = await signInWithPopup(auth, googleProvider)
+      const res = await signInWithRedirect(auth, googleProvider)
       if (res) {
         route.push('/')
       }
@@ -22,11 +23,11 @@ const Login = () => {
   }
 
   useEffect(() => {
-    if (user) {
-      route.push('/')
-    } else {
-      route.push('/auth/login')
+    const getUser = () => {
+      if (!user) return Router.push('/auth/login')
+      return Router.push('/')
     }
+    getUser()
   }, [user])
 
   return (

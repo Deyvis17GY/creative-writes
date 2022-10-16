@@ -40,8 +40,12 @@ const Dashboard = () => {
     const getData = async () => {
       try {
         setLoadingPosts(true)
-        if (loading) return <h1>Loading...</h1>
+        if (loading) {
+          setLoadingPosts(true)
+          return
+        }
         if (!user) route.push('/auth/login')
+        if (!auth.currentUser) return
         const collectionsRef = collection(db, 'posts')
         const queryUser = query(collectionsRef, where('user', '==', user?.uid))
         const unsubscribe = onSnapshot(queryUser, (snapshot: any) => {
