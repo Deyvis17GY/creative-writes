@@ -18,7 +18,7 @@ const Login = () => {
         route.push('/')
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 
