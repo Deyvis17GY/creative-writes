@@ -73,7 +73,7 @@ jobs:
             format: markdown
 
     Notify_Telegram:
-      needs: [build_deploy]
+      needs: [Deploy-Preview]
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@master
