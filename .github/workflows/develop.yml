@@ -2,7 +2,7 @@ name: Develop Deploy
 
 on:
   push:
-    branches: [ master ]
+    branches: [ feat ]
 
 jobs:
     Telegram_Start:
