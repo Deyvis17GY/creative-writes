@@ -40,13 +40,19 @@ jobs:
     deploy_github_pages:
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@v2
+        - name: Checkout repository
+          uses: actions/checkout@v2
+        - name: Checkout submodules
+          run: git submodule update --init --recursive
         - uses: actions/setup-node@v1
           with:
             node-version: 12.x
-        - run: npm install -g yarn
-        - run: yarn install --frozen-lockfile
-        - run: yarn build
+        - name: Build the site & install dependencies
+          run: |
+             npm install -g yarn
+             yarn install --frozen-lockfile
+             yarn export
+             ls
         - name: Deploy
           uses: peaceiris/actions-gh-pages@v3
           with:
