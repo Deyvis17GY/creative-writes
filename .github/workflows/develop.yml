@@ -2,7 +2,7 @@ name: Develop Deploy
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ master ]
 
 jobs:
     Telegram_Start:
@@ -139,5 +139,5 @@ jobs:
               👨‍💼${{ github.actor }} created commit:
               📝Commit message: ${{ github.event.commits[0].message }}
               📂See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
-              show in https://develop--shopping-list-dyv.netlify.app/
+              show in https://develop--creative-writes-dyv.netlify.app/
             format: markdown
