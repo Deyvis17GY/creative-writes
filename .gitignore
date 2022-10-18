@@ -47,3 +47,5 @@ next-env.d.ts
 # Generate SSH keys
 gh-pages
 gh-pages.pub
+# Local Netlify folder
+.netlify
