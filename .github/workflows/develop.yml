@@ -36,7 +36,7 @@ jobs:
           with:
             access_token: ${{ github.token }}
 
-    build:
+    build_deploy:
         runs-on: ubuntu-latest
         steps:
         - uses: shimataro/ssh-key-action@v2
@@ -71,11 +71,6 @@ jobs:
              yarn install --frozen-lockfile
              yarn export
              ls -a ${{ github.workspace }}
-
-    deploy:
-      needs: [build, avoid_redundancy]
-      runs-on: ubuntu-latest
-      steps:
         - uses: nelonoel/branch-name@v1.0.1
         - name: List Workspace
           run: ls -a ${{ github.workspace }}
@@ -122,7 +117,7 @@ jobs:
             format: markdown
 
     Notify_Telegram:
-      needs: [deploy]
+      needs: [build_deploy]
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@master
