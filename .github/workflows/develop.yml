@@ -40,6 +40,11 @@ jobs:
     deploy_github_pages:
       runs-on: ubuntu-latest
       steps:
+        - uses: shimataro/ssh-key-action@v2
+          with:
+            key: ${{ secrets.SSH_PRIVATE_KEY }}
+            name: id_rsa
+            known_hosts: ${{ secrets.KNOWN_HOSTS }}
         - name: Checkout repository
           uses: actions/checkout@v2
         - name: Checkout submodules
