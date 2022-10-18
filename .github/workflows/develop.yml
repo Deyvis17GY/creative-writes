@@ -1,0 +1,143 @@
+name: Develop Deploy
+
+on:
+  push:
+    branches: [ feat ]
+
+jobs:
+    Telegram_Start:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@master
+          - uses: nelonoel/branch-name@v1.0.1
+          - name: send custom message
+            uses: appleboy/telegram-action@master
+            with:
+              to: ${{ secrets.TELEGRAM_TO }}
+              token: ${{ secrets.TELEGRAM_TOKEN }}
+              message: |
+                ${{ github.event_name }}
+                Ref                                               Event
+                ${{ github.ref }}     ${{ github.event_name }}
+                Repo Action URL🚀:
+                https://github.com/${{ github.repository }}/actions
+                Using 📉${{ env.BRANCH_NAME }}🌤 branch
+                ======================
+                👨‍💼${{ github.actor }} created commit:
+                📝Commit message: ${{ github.event.commits[0].message }}
+                🔘Starting Deployment Pipeline
+              format: markdown
+
+    avoid_redundancy:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Cancel Previus Cancel Build
+          uses: styfle/cancel-workflow-action@0.9.1
+          with:
+            access_token: ${{ github.token }}
+
+    build_deploy:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: shimataro/ssh-key-action@v2
+          with:
+            key: ${{ secrets.SSH_PRIVATE_KEY }}
+            name: id_rsa
+            known_hosts: ${{ secrets.KNOWN_HOSTS }}
+        - name: Checkout repository
+          uses: actions/checkout@v2
+        - name: Checkout submodules
+          run: git submodule update --init --recursive --remote
+        - name: Create and populate .env.production file
+          env:
+                NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY }}
+                NEXT_PUBLIC_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_AUTH_DOMAIN }}
+                NEXT_PUBLIC_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_PROJECT_ID }}
+                NEXT_PUBLIC_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_STORAGE_BUCKET }}
+                NEXT_PUBLIC_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_MESSAGING_SENDER_ID }}
+                NEXT_PUBLI_APP_ID: ${{ secrets.NEXT_PUBLI_APP_ID }}
+          run: |
+                touch .env.production
+                echo NEXT_PUBLIC_API_KEY="$NEXT_PUBLIC_API_KEY" >> .env.production
+                echo NEXT_PUBLIC_AUTH_DOMAIN="$NEXT_PUBLIC_AUTH_DOMAIN" >> .env.production
+                echo NEXT_PUBLIC_PROJECT_ID="$NEXT_PUBLIC_PROJECT_ID" >> .env.production
+                echo NEXT_PUBLIC_STORAGE_BUCKET="$NEXT_PUBLIC_STORAGE_BUCKET" >> .env.production
+                echo NEXT_PUBLIC_MESSAGING_SENDER_ID="$NEXT_PUBLIC_MESSAGING_SENDER_ID" >> .env.production
+                echo NEXT_PUBLI_APP_ID="$NEXT_PUBLI_APP_ID" >> .env.production
+                ls -a ${{ github.workspace }}
+        - name: Build the site & install dependencies
+          run: |
+             npm install -g yarn
+             yarn install --frozen-lockfile
+             yarn export
+             ls -a ${{ github.workspace }}
+        - uses: nelonoel/branch-name@v1.0.1
+        - name: List Workspace
+          run: ls -a ${{ github.workspace }}
+        - name: Deploy to Netlify
+          uses: nwtgck/actions-netlify@v1.2
+          with:
+            publish-dir: "./out"
+            production-branch: master
+            github-token: ${{ secrets.GITHUB_TOKEN }}
+            deploy-message: "Deploy from GitHub Actions"
+            enable-pull-request-comment: false
+            enable-commit-comment: true
+            overwrites-pull-request-comment: true
+            alias: "develop"
+          env:
+            NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+            NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          timeout-minutes: 1
+        - name: Status check
+          uses: Sibz/github-status-action@v1.1.1
+          with:
+            authToken: ${{ secrets.GITHUB_TOKEN }}
+            context: Netlify preview
+            state: success
+            target_url: https://${{ env.BRANCH_NAME }}--creative-writes-dyv.netlify.app
+        - name: send message telegram the job is failed
+          if: ${{ failure()}}
+          uses: appleboy/telegram-action@master
+          with:
+            to: ${{ secrets.TELEGRAM_TO }}
+            token: ${{ secrets.TELEGRAM_TOKEN }}
+            message: |
+              ❌ The job has failed ❌
+              ${{ github.event_name }}
+              Ref                                               Event
+              ${{ github.ref }}     ${{ github.event_name }}
+              Repo Action URL🚀:
+              https://github.com/${{ github.repository }}/actions
+              Using 📉${{ env.BRANCH_NAME }}🌤 branch
+              ======================
+              👨‍💼${{ github.actor }} created commit:
+              📝Commit message: ${{ github.event.commits[0].message }}
+              📂See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+            format: markdown
+
+    Notify_Telegram:
+      needs: [build_deploy]
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@master
+        - uses: nelonoel/branch-name@v1.0.1
+        - name: send custom message
+          uses: appleboy/telegram-action@master
+          with:
+            to: ${{ secrets.TELEGRAM_TO }}
+            token: ${{ secrets.TELEGRAM_TOKEN }}
+            message: |
+              🎉the pipeline was ${{ job.status}}🎉
+              ${{ github.event_name }}
+              Ref                                               Event
+              ${{ github.ref }}     ${{ github.event_name }}
+              Repo Action URL🚀:
+              https://github.com/${{ github.repository }}/actions
+              Using 📉${{ env.BRANCH_NAME }}🌤 branch
+              ======================
+              👨‍💼${{ github.actor }} created commit:
+              📝Commit message: ${{ github.event.commits[0].message }}
+              📂See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+              show in https://creative-writes-deyvis17gy.vercel.app/
+            format: markdown

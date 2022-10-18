@@ -35,6 +35,7 @@ export const Nav = () => {
                     width={40}
                     height={40}
                     objectFit='cover'
+                    referrerPolicy='no-referrer'
                   />
                 </a>
               </Link>

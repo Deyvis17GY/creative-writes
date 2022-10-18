@@ -27,6 +27,7 @@ const Home: NextPage = () => {
   }
 
   useEffect(() => {
+    console.debug('useEffect')
     getPosts()
   }, [])
 
