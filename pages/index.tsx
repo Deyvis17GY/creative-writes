@@ -27,7 +27,7 @@ const Home: NextPage = () => {
   }
 
   useEffect(() => {
-    console.debug('useEffect')
+    console.debug('version', process.env.NEXT_PUBLIC_VERSION)
     getPosts()
   }, [])
 
