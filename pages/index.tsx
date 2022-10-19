@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { Message } from '../components/Message'
 import { Loader } from '../components/Loader'
 import { db } from '../utils/firebase'
+import getConfig from 'next/config'
 
 const Home: NextPage = () => {
   const [allPosts, setAllPosts] = useState<any>([])
@@ -27,7 +28,10 @@ const Home: NextPage = () => {
   }
 
   useEffect(() => {
-    console.debug('version', process.env.NEXT_PUBLIC_VERSION)
+    console.log(
+      `%cApp Version ${getConfig().publicRuntimeConfig?.version as string}`,
+      'color: #752ACB;font-size:0.9rem;font-weight:500;'
+    )
     getPosts()
   }, [])
 
