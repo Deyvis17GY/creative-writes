@@ -1,15 +1,16 @@
+import dynamicClass from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { useI18N } from '../context/i18nContext'
-import { auth } from '../utils/firebase'
-import { MdTranslate } from 'react-icons/md'
 import { useEffect, useState } from 'react'
-import dynamicClass from 'clsx'
-import { GrClose, GrMenu } from 'react-icons/gr'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { AiOutlineClose } from 'react-icons/ai'
 import { BiBookAdd } from 'react-icons/bi'
+import { FiMenu } from 'react-icons/fi'
+import { MdTranslate } from 'react-icons/md'
+import { useI18N } from '../context/i18nContext'
 import { currentTheme } from '../shared/utils/currentTheme'
+import { auth } from '../utils/firebase'
 
 export const Nav = () => {
   const [user, loading] = useAuthState(auth)
@@ -74,12 +75,21 @@ export const Nav = () => {
           <ul className='flex items-center gap-10 phone:flex-col relative top-0 left-0 w-full phone:h-full'>
             {!user && (
               <div className={classItemBurger}>
+                <button
+                  className='flex justify-start items-center phone:w-full gap-4 text-white'
+                  onClick={onThemeClick}
+                >
+                  <span>{isDark ? '🌞' : '🌙'}</span>
+                  <span className='text-white dark:text-white sm:hidden'>
+                    {isDark ? t('nav.light') : t('nav.dark')}
+                  </span>
+                </button>
                 <Link href='/' locale={restOfLocales[0]}>
                   <a
                     onClick={() => onRouteClick()}
                     className='items-center justify-start text-sm font-medium cursor-pointer phone:text-white flex gap-4 phone:w-full'
                   >
-                    <MdTranslate className='phone:text-3xl text-lg' />
+                    <MdTranslate className='phone:text-3xl text-lg dark:text-white' />
 
                     <span className='sm:hidden text-white'>
                       {t(`nav.${restOfLocales[0]}`)}{' '}
@@ -103,9 +113,6 @@ export const Nav = () => {
                   onClick={onThemeClick}
                 >
                   <span>{isDark ? '🌞' : '🌙'}</span>
-                  <span className='text-black dark:text-white phone:hidden'>
-                    {isDark ? t('nav.light') : t('nav.dark')}
-                  </span>
                   <span className='text-white dark:text-white sm:hidden'>
                     {isDark ? t('nav.light') : t('nav.dark')}
                   </span>
@@ -165,9 +172,9 @@ export const Nav = () => {
           onClick={toggleMenu}
         >
           {!isToggle ? (
-            <GrMenu className='text-2xl dark:text-white text-white' />
+            <FiMenu className='text-2xl dark:text-white text-black' />
           ) : (
-            <GrClose className='text-2xl dark:text-white text-white' />
+            <AiOutlineClose className='text-2xl dark:text-white text-black' />
           )}
         </div>
       </nav>

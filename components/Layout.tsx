@@ -8,7 +8,7 @@ export const Layout = ({ children }: ILayoutProps) => {
       <Nav />
       <main>{children}</main>
       {process.env.NODE_ENV === 'development' && (
-        <span className='fixed right-3 bottom-3 text-sm dark:text-white'>
+        <span className='fixed right-3 bottom-3 text-sm dark:text-gray-600'>
           version: v.{getConfig().publicRuntimeConfig?.version}
         </span>
       )}
