@@ -6,10 +6,13 @@ import { useEffect, useState } from 'react'
 import { Message } from '../components/Message'
 import { Loader } from '../components/Loader'
 import { db } from '../utils/firebase'
+import getConfig from 'next/config'
+import { useI18N } from '../context/i18nContext'
 
 const Home: NextPage = () => {
   const [allPosts, setAllPosts] = useState<any>([])
   const [loading, setLoading] = useState(false)
+  const { t } = useI18N()
 
   const getPosts = async () => {
     try {
@@ -27,7 +30,10 @@ const Home: NextPage = () => {
   }
 
   useEffect(() => {
-    console.debug('useEffect')
+    console.log(
+      `%cApp Version ${getConfig().publicRuntimeConfig?.version as string}`,
+      'color: #752ACB;font-size:0.9rem;font-weight:500;'
+    )
     getPosts()
   }, [])
 
@@ -39,17 +45,17 @@ const Home: NextPage = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <div className='my-12 font-medium'>
-        <h2>See what other people are saying</h2>
+      <div className='my-12 font-medium z-0 dark:text-white'>
+        <h2>{t('description')}</h2>
         {loading ? (
           <Loader />
         ) : (
           allPosts.map((post: any) => (
             <Message key={post.id} {...post}>
               <Link href={{ pathname: `${post.id}`, query: { ...post } }}>
-                <button>
+                <button className='dark:text-black'>
                   {post.comments?.length > 0 ? post.comments?.length : 0}{' '}
-                  comments
+                  {t('comments')}
                 </button>
               </Link>
             </Message>

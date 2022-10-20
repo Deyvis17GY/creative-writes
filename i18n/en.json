@@ -1,0 +1,38 @@
+{
+  "description": "See what other people are saying",
+  "comments": "comments",
+  "nav": {
+    "title": "Creative Minds",
+    "join": "Join Now",
+    "post": "Post",
+    "dashboard": "Profile",
+    "language": "Language",
+    "es": "Spanish",
+    "en": "English",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "dashboard": {
+    "title": "Your posts",
+    "logout": "Sign Out",
+    "actionEdit": "Edit",
+    "actionDelete": "Delete"
+  },
+  "login": {
+    "subtitle": "Join Today",
+    "providers": "Sign in width one of the providers",
+    "google": "Sign in with Google"
+  },
+  "post": {
+    "subtitle": "Create a new Post",
+    "editSubtitle": "Edit your post",
+    "description": "Description",
+    "submit": "Submit"
+  },
+  "comment": {
+    "title": "Comments",
+    "description": "Description",
+    "submit": "Submit",
+    "placeholder": "Send a message 😀"
+  }
+}

@@ -1,15 +1,16 @@
 /** @type {import('next').NextConfig} */
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
+const { version } = require('./package.json')
 
 const withPWA = require('next-pwa')({
   dest: 'public',
   register: true,
-  skipWaiting: true
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === 'development'
 })
 
 const nextConfig = {
-  assetPrefix: isDevelopment ? 'creative-writes' : '',
   reactStrictMode: true,
   swcMinify: true,
   images: {
@@ -19,6 +20,13 @@ const nextConfig = {
       'images.unsplash.com',
       'i.pravatar.cc'
     ]
+  },
+  publicRuntimeConfig: {
+    version
+  },
+  i18n: {
+    locales: ['en', 'es'],
+    defaultLocale: 'es'
   }
 }
 

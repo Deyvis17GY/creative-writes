@@ -1,0 +1,38 @@
+{
+  "description": "Mira lo que otras personas están diciendo",
+  "comments": "comentarios",
+  "nav": {
+    "title": "Mentes Creativas",
+    "join": "Únete ahora",
+    "post": "Publicar",
+    "dashboard": "Perfil",
+    "language": "Idioma",
+    "es": "Español",
+    "en": "Ingles",
+    "light": "Claro",
+    "dark": "Oscuro"
+  },
+  "dashboard": {
+    "title": "Tus publicaciones",
+    "logout": "Cerrar Sesión",
+    "actionEdit": "Editar",
+    "actionDelete": "Eliminar"
+  },
+  "login": {
+    "subtitle": "Únete hoy",
+    "providers": "Regístrese en uno de los proveedores",
+    "google": "Inicia sesión con Google"
+  },
+  "post": {
+    "subtitle": "Crear una nueva publicación",
+    "editSubtitle": "Edita tu publicación",
+    "description": "Descripción",
+    "submit": "Enviar"
+  },
+  "comment": {
+    "title": "Commentarios",
+    "description": "Descripción",
+    "submit": "Enviar",
+    "placeholder": "Envía un mensaje 😀"
+  }
+}

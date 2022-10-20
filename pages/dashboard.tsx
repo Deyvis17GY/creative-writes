@@ -15,6 +15,7 @@ import { BsTrash2Fill } from 'react-icons/bs'
 import { toast } from 'react-toastify'
 import { Loader } from '../components/Loader'
 import { Message } from '../components/Message'
+import { useI18N } from '../context/i18nContext'
 import { auth, db } from '../utils/firebase'
 
 const Dashboard = () => {
@@ -22,6 +23,7 @@ const Dashboard = () => {
   const [user, loading] = useAuthState(auth)
   const [posts, setPosts] = useState([])
   const [loadingPosts, setLoadingPosts] = useState(false)
+  const { t } = useI18N()
   // Delete post
   const deletePost = async (id: string) => {
     try {
@@ -64,7 +66,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h1>Your posts</h1>
+      <h1 className='dark:text-white'>{t('dashboard.title')}</h1>
       <div>
         {loadingPosts ? (
           <Loader />
@@ -77,12 +79,12 @@ const Dashboard = () => {
                   onClick={() => deletePost(post.id)}
                 >
                   <BsTrash2Fill className='text-2xl' />
-                  Delete
+                  {t('dashboard.actionDelete')}
                 </button>
                 <Link href={{ pathname: '/post', query: post }}>
                   <button className='text-teal-600 flex items-center justify-center gap-2 py-2 text-sm'>
                     <AiFillEdit className='text-2xl' />
-                    Edit
+                    {t('dashboard.actionEdit')}
                   </button>
                 </Link>
               </div>
@@ -94,7 +96,7 @@ const Dashboard = () => {
         className='font-medium text-white bg-gray-800 py-2 px-4 my-6 '
         onClick={() => auth.signOut()}
       >
-        Sign out
+        {t('dashboard.logout')}
       </button>
     </div>
   )

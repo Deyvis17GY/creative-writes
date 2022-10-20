@@ -1,0 +1,61 @@
+@mixin light-mode {
+    --color-black-white: #000;
+    --color-background: #1F2836;
+    --color-primary: #ddb7b4;
+    --color-btn-primary: #ff2518;
+    --color-text-gray: #B2B1B1;
+    --color-text-secondary: #e45d50;
+    --color-text-gray-dark: #1a1818;
+    --color-background-smooth: #fff;
+    --color-border-gray: #E3E3E3;
+    --color-placeholder: #737373;
+    --color-background-dark: #1a1818;
+    --color-background-gray: #9E9EA7;
+}
+
+@mixin dark-mode {
+    --color-black-white: #fff;
+    --color-background: #1F2836;
+    --color-primary: #ddb7b4;
+    --color-btn-primary: #ff2518;
+    --color-text-gray: #B2B1B1;
+    --color-text-secondary: #e45d50;
+    --color-text-gray-dark: #f2f2f2;
+    --color-background-smooth: #1e272ce5;
+    --color-border-gray: #E2E0E0;
+    --color-placeholder: #737373;
+    --color-background-dark: #1a1818;
+    --color-background-gray: #D7D5D9;
+}
+
+:root {
+    @include light-mode;
+}
+
+.dark-mode {
+    @include dark-mode;
+}
+
+.light-mode {
+    @include light-mode;
+}
+
+[data-theme="dark"] {
+    @include dark-mode;
+}
+
+[data-theme="light"] {
+    @include light-mode;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        @include dark-mode;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        @include light-mode;
+    }
+}

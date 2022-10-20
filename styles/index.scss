@@ -1,0 +1,19 @@
+@import './theme.scss';
+@import './variables.scss';
+
+body {
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: var(--color-background);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--color-primary);
+    }
+
+    font-family: 'Open Sans',
+    sans-serif;
+}

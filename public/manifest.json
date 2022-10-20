@@ -2,7 +2,7 @@
   "name": "Creative Writes Dyv",
   "short_name": "Creative Writes",
   "description": " web app to write your creative ideas",
-  "theme_color": "#f69435",
+  "theme_color": "#1f2937",
   "background_color": "#1f2937",
   "display": "standalone",
   "scope": "./",
