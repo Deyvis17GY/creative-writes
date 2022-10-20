@@ -79,7 +79,7 @@ export const Nav = () => {
                   className='flex justify-start items-center phone:w-full gap-4 text-white'
                   onClick={onThemeClick}
                 >
-                  <span>{isDark ? '🌞' : '🌙'}</span>
+                  <span className='phone:text-2xl'>{isDark ? '🌞' : '🌙'}</span>
                   <span className='text-white dark:text-white sm:hidden'>
                     {isDark ? t('nav.light') : t('nav.dark')}
                   </span>
@@ -112,7 +112,7 @@ export const Nav = () => {
                   className='flex justify-start items-center phone:w-full gap-4 text-white'
                   onClick={onThemeClick}
                 >
-                  <span>{isDark ? '🌞' : '🌙'}</span>
+                  <span className='phone:text-2xl'>{isDark ? '🌞' : '🌙'}</span>
                   <span className='text-white dark:text-white sm:hidden'>
                     {isDark ? t('nav.light') : t('nav.dark')}
                   </span>
