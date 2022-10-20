@@ -23,6 +23,10 @@ const nextConfig = {
   },
   publicRuntimeConfig: {
     version
+  },
+  i18n: {
+    locales: ['en', 'es'],
+    defaultLocale: 'es'
   }
 }
 
