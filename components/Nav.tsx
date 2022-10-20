@@ -50,18 +50,38 @@ export const Nav = () => {
     <>
       <nav className='flex justify-between items-center py-10'>
         <Link href='/'>
-          <button className='md:text-lg phone:text-base  font-medium'>
+          <button
+            className='md:text-lg phone:text-base  font-medium'
+            onClick={() => onRouteClick()}
+          >
             {t('nav.title')}
           </button>
         </Link>
         <article className={classMenuBurger}>
           <ul className='flex items-center gap-10 phone:flex-col relative top-0 left-0 w-full phone:h-full'>
             {!user && (
-              <Link href='/auth/login'>
-                <a className='py-2 px-4 text-sm bg-cyan-500 text-white rounded-lg font-medium ml-8 cursor-pointer'>
-                  {t('nav.join')}
-                </a>
-              </Link>
+              <div className={classItemBurger}>
+                <Link href='/' locale={restOfLocales[0]}>
+                  <a
+                    onClick={() => onRouteClick()}
+                    className='items-center justify-start text-sm font-medium cursor-pointer phone:text-white flex gap-4 phone:w-full'
+                  >
+                    <MdTranslate className='phone:text-3xl text-lg' />
+
+                    <span className='sm:hidden text-white'>
+                      {t(`nav.${restOfLocales[0]}`)}{' '}
+                    </span>
+                  </a>
+                </Link>
+                <Link href='/auth/login'>
+                  <a
+                    className='py-2 px-4 text-sm bg-cyan-500 text-white rounded-lg font-medium cursor-pointer phone:w-full flex justify-start'
+                    onClick={() => onRouteClick()}
+                  >
+                    {t('nav.join')}
+                  </a>
+                </Link>
+              </div>
             )}
             {user && (
               <div className={classItemBurger}>
