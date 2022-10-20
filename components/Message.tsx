@@ -8,7 +8,7 @@ export const Message = ({
   description
 }: IMessageProps) => {
   return (
-    <div className='bg-white p-8 border-b-2 rounded-lg'>
+    <div className='bg-white p-8 border-b-2 rounded-lg my-2'>
       <div className='flex items-center gap-2'>
         <Image
           src={avatar || 'https://i.pravatar.cc/150?img=32'}
@@ -28,10 +28,10 @@ export const Message = ({
           referrerPolicy='no-referrer'
         /> */}
 
-        <h2 className='font-bold'>{username}</h2>
+        <h2 className='font-bold dark:text-black'>{username}</h2>
       </div>
       <div className='py-4'>
-        <p title={description} className='py-2 font-medium'>
+        <p title={description} className='py-2 font-medium dark:text-black'>
           {description}
         </p>
       </div>

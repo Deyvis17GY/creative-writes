@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 import dynamicClass from 'clsx'
 import { GrClose, GrMenu } from 'react-icons/gr'
 import { BiBookAdd } from 'react-icons/bi'
+import { currentTheme } from '../shared/utils/currentTheme'
 
 export const Nav = () => {
   const [user, loading] = useAuthState(auth)
@@ -16,6 +17,7 @@ export const Nav = () => {
   const { t } = useI18N()
 
   const [isToggle, setIsToggle] = useState(false)
+  const [isDark, setIsDark] = useState(false)
 
   const restOfLocales = locales ? locales.filter((l) => l !== locale) : []
 
@@ -38,11 +40,22 @@ export const Nav = () => {
     setIsToggle(false)
   }
 
+  const onThemeClick = () => {
+    setIsToggle(false)
+    document.body.classList.toggle('dark')
+    setIsDark(!isDark)
+  }
+
+  useEffect(() => {
+    document.body.classList.add(currentTheme())
+    setIsDark(currentTheme() === 'dark' ? true : false)
+  }, [])
+
   useEffect(() => {
     if (isToggle) {
-      document.body.classList.toggle('fixed')
+      document.body.classList.toggle('overflow-hidden')
     } else {
-      document.body.classList.remove('fixed')
+      document.body.classList.remove('overflow-hidden')
     }
   }, [isToggle])
 
@@ -51,7 +64,7 @@ export const Nav = () => {
       <nav className='flex justify-between items-center py-10'>
         <Link href='/'>
           <button
-            className='md:text-lg phone:text-base  font-medium'
+            className='md:text-lg phone:text-base  font-medium dark:text-white'
             onClick={() => onRouteClick()}
           >
             {t('nav.title')}
@@ -85,12 +98,24 @@ export const Nav = () => {
             )}
             {user && (
               <div className={classItemBurger}>
+                <button
+                  className='flex justify-start items-center phone:w-full gap-4 text-white'
+                  onClick={onThemeClick}
+                >
+                  <span>{isDark ? '🌞' : '🌙'}</span>
+                  <span className='text-black dark:text-white phone:hidden'>
+                    {isDark ? t('nav.light') : t('nav.dark')}
+                  </span>
+                  <span className='text-white dark:text-white sm:hidden'>
+                    {isDark ? t('nav.light') : t('nav.dark')}
+                  </span>
+                </button>
                 <Link href='/' locale={restOfLocales[0]}>
                   <a
                     onClick={() => onRouteClick()}
                     className='items-center justify-start text-sm font-medium cursor-pointer phone:text-white flex gap-4 phone:w-full'
                   >
-                    <MdTranslate className='phone:text-3xl text-lg' />
+                    <MdTranslate className='phone:text-3xl text-lg dark:text-white' />
 
                     <span className='sm:hidden text-white'>
                       {t(`nav.${restOfLocales[0]}`)}{' '}
@@ -136,13 +161,13 @@ export const Nav = () => {
         </article>
 
         <div
-          className='flex flex-col w-8 h-6  border-0 bg-transparent gap-2 sm:hidden cursor-pointer'
+          className='flex flex-col w-8 h-6 border-0 gap-2 sm:hidden cursor-pointer '
           onClick={toggleMenu}
         >
           {!isToggle ? (
-            <GrMenu className='text-2xl' />
+            <GrMenu className='text-2xl dark:text-white text-white' />
           ) : (
-            <GrClose className='text-2xl' />
+            <GrClose className='text-2xl dark:text-white text-white' />
           )}
         </div>
       </nav>

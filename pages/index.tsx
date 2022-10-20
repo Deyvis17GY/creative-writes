@@ -45,7 +45,7 @@ const Home: NextPage = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <div className='my-12 font-medium z-0'>
+      <div className='my-12 font-medium z-0 dark:text-white'>
         <h2>{t('description')}</h2>
         {loading ? (
           <Loader />
@@ -53,7 +53,7 @@ const Home: NextPage = () => {
           allPosts.map((post: any) => (
             <Message key={post.id} {...post}>
               <Link href={{ pathname: `${post.id}`, query: { ...post } }}>
-                <button>
+                <button className='dark:text-black'>
                   {post.comments?.length > 0 ? post.comments?.length : 0}{' '}
                   {t('comments')}
                 </button>

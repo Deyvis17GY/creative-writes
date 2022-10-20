@@ -83,11 +83,13 @@ const Post = () => {
   return (
     <div className='my-20 p-12 shadow-lg rounded-lg max-w-md mx-auto'>
       <form onSubmit={submitPost}>
-        <h1 className='text-2xl font-bold'>
+        <h1 className='text-2xl font-bold dark:text-white'>
           {post.id ? t('post.editSubtitle') : t('post.subtitle')}
         </h1>
         <div className='py-2'>
-          <h3 className='text-lg font-medium py-2'>{t('post.description')}</h3>
+          <h3 className='text-lg font-medium py-2 dark:text-white'>
+            {t('post.description')}
+          </h3>
           <textarea
             className='bg-gray-800 h-48 w-full text-white rounded-lg p-2 text-sm'
             name=''

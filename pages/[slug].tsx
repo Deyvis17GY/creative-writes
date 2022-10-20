@@ -107,7 +107,7 @@ const Details = () => {
         </form>
 
         <div className='py-6'>
-          <h2 className='font-bold'>{t('comment.title')}</h2>
+          <h2 className='font-bold dark:text-white'>{t('comment.title')}</h2>
           {allMessages.map((message) => {
             return (
               <div
