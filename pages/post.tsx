@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { toast } from 'react-toastify'
+import { useI18N } from '../context/i18nContext'
 import { auth, db } from '../utils/firebase'
 
 export interface IPostData {
@@ -22,6 +23,7 @@ const Post = () => {
   const [isDisabled, setIsDisabled] = useState(false)
   const [user, loading] = useAuthState(auth)
   const route = useRouter()
+  const { t } = useI18N()
   const routeData = route.query
 
   const submitPost = async (e: any) => {
@@ -82,10 +84,10 @@ const Post = () => {
     <div className='my-20 p-12 shadow-lg rounded-lg max-w-md mx-auto'>
       <form onSubmit={submitPost}>
         <h1 className='text-2xl font-bold'>
-          {post.id ? 'Edit your Post' : 'Create a new Post'}
+          {post.id ? t('post.editSubtitle') : t('post.subtitle')}
         </h1>
         <div className='py-2'>
-          <h3 className='text-lg font-medium py-2'>Description</h3>
+          <h3 className='text-lg font-medium py-2'>{t('post.description')}</h3>
           <textarea
             className='bg-gray-800 h-48 w-full text-white rounded-lg p-2 text-sm'
             name=''
@@ -109,7 +111,7 @@ const Post = () => {
           type='submit'
           disabled={isDisabled}
         >
-          Submit
+          {t('post.submit')}
         </button>
       </form>
     </div>

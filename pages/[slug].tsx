@@ -6,16 +6,18 @@ import {
   updateDoc
 } from 'firebase/firestore'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import { Message } from '../components/Message'
+import { useI18N } from '../context/i18nContext'
 import { IDetailsPost, IRouterData } from '../interfaces'
 import { getTimeAgo } from '../shared/utils/timeAgo'
 import { auth, db } from '../utils/firebase'
 
 const Details = () => {
   const router = useRouter()
+  const { t } = useI18N()
   const routeData: IRouterData = {
     id: router.query.id as string,
     avatar: router.query.avatar as string,
@@ -57,6 +59,11 @@ const Details = () => {
     const getComments = async () => {
       try {
         if (!router.isReady) return
+
+        if (!routeData?.id) {
+          return Router.push('/')
+        }
+
         const docRef = doc(db, 'posts', routeData?.id as string)
         const unsubscribe = onSnapshot(docRef, (snapshot) => {
           const messagesBack = snapshot
@@ -72,7 +79,7 @@ const Details = () => {
       }
     }
     getComments()
-  }, [])
+  }, [routeData?.id, router.isReady])
 
   return (
     <div>
@@ -87,7 +94,7 @@ const Details = () => {
             type='text'
             name=''
             id=''
-            placeholder='Send a message 😀'
+            placeholder={t('comment.placeholder')}
             className='bg-gray-800 w-full p-2 text-white text-sm'
             ref={messageRef}
           />
@@ -95,12 +102,12 @@ const Details = () => {
             className='bg-cyan-500 text-white py-2 px-4 text-sm'
             type='submit'
           >
-            Submit
+            {t('comment.submit')}
           </button>
         </form>
 
         <div className='py-6'>
-          <h2 className='font-bold'>Comments</h2>
+          <h2 className='font-bold'>{t('comment.title')}</h2>
           {allMessages.map((message) => {
             return (
               <div
@@ -118,7 +125,9 @@ const Details = () => {
                   <h2>{message.username}</h2>
                 </div>
                 <h2>{message.message}</h2>
-                <p>{getTimeAgo(message.time.toDate().getTime())}</p>
+                <span className='text-sm'>
+                  {getTimeAgo(message.time.toDate().getTime())}
+                </span>
               </div>
             )
           })}
