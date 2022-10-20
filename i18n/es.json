@@ -8,7 +8,9 @@
     "dashboard": "Perfil",
     "language": "Idioma",
     "es": "Español",
-    "en": "Ingles"
+    "en": "Ingles",
+    "light": "Claro",
+    "dark": "Oscuro"
   },
   "dashboard": {
     "title": "Tus publicaciones",

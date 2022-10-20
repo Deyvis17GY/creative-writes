@@ -8,7 +8,9 @@
     "dashboard": "Profile",
     "language": "Language",
     "es": "Spanish",
-    "en": "English"
+    "en": "English",
+    "light": "Light",
+    "dark": "Dark"
   },
   "dashboard": {
     "title": "Your posts",
