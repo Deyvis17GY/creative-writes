@@ -72,7 +72,7 @@ export const Nav = () => {
           </button>
         </Link>
         <article className={classMenuBurger}>
-          <ul className='flex items-center gap-10 phone:flex-col relative top-0 left-0 w-full phone:h-full'>
+          <ul className='flex items-center gap-10 phone:flex-col relative top-0 phone:left-5  w-full phone:h-full'>
             {!user && (
               <div className={classItemBurger}>
                 <button
