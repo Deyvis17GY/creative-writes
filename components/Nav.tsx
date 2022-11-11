@@ -72,14 +72,14 @@ export const Nav = () => {
           </button>
         </Link>
         <article className={classMenuBurger}>
-          <ul className='flex items-center gap-10 phone:flex-col relative top-0 left-0 w-full phone:h-full'>
+          <ul className='flex items-center gap-10 phone:flex-col relative top-0 phone:left-5  w-full phone:h-full'>
             {!user && (
               <div className={classItemBurger}>
                 <button
                   className='flex justify-start items-center phone:w-full gap-4 text-white'
                   onClick={onThemeClick}
                 >
-                  <span>{isDark ? '🌞' : '🌙'}</span>
+                  <span className='phone:text-2xl'>{isDark ? '🌞' : '🌙'}</span>
                   <span className='text-white dark:text-white sm:hidden'>
                     {isDark ? t('nav.light') : t('nav.dark')}
                   </span>
@@ -112,7 +112,7 @@ export const Nav = () => {
                   className='flex justify-start items-center phone:w-full gap-4 text-white'
                   onClick={onThemeClick}
                 >
-                  <span>{isDark ? '🌞' : '🌙'}</span>
+                  <span className='phone:text-2xl'>{isDark ? '🌞' : '🌙'}</span>
                   <span className='text-white dark:text-white sm:hidden'>
                     {isDark ? t('nav.light') : t('nav.dark')}
                   </span>
